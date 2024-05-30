@@ -13,8 +13,8 @@ Hammer             | Partially/Uses FGD files from CS2
 MaterialEditor     | Yes
 ModelDoc           | Partially/Crashes when opening deadlock models
 Animgraph          | No
-ParticleEditor     | Yes
+ParticleEditor     | No
 ImageSubrectEditor | Partially/Only as lib/Check the Editor
-SFM                | Crashes when selecting a scene
+SFM                | Partially/Crashes when selecting a scene
 VConsole           | Yes
 VConsoleTools      | Yes
