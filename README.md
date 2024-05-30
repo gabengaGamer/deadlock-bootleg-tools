@@ -4,7 +4,7 @@
 2. Type -tools on game launch parameters. You can also try -gpuraytracing and -nocustomermachine.
 3. Enjoy
    
-## Warning. Deadlock tools use dll files from cs2, this may cause an error in using tools and fgd files
+## Warning. Deadlock tools uses external source 2 dll files. This may cause an error in using tools and fgd files
 
 ## List of supported tools
 Name               | Status
