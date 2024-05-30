@@ -9,6 +9,7 @@
 ## List of supported tools
 Name               | Status
 -------------------|----------------------
+AssetBrowser       | Yes
 Hammer             | Partially/Uses FGD files from CS2
 MaterialEditor     | Yes
 ModelDoc           | Partially/Crashes when opening deadlock models
