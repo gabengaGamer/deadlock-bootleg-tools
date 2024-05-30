@@ -14,7 +14,7 @@ MaterialEditor     | Yes
 ModelDoc           | Partially/Crashes when opening deadlock models
 Animgraph          | No
 ParticleEditor     | No
-ImageSubrectEditor | Partially/Only as lib/Check the Editor
+ImageSubrectEditor | Yes
 SFM                | Partially/Crashes when selecting a scene
 VConsole           | Yes
 VConsoleTools      | Yes
