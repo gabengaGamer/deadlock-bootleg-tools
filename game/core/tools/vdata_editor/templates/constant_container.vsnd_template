@@ -1,0 +1,10 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	vdata_template_name = "Voice Container: Default Container"
+	vdata_template_description = "A container that plays a vsnd (wav) file"
+	generic_data_type = "CVoiceContainerBase"
+	CVoiceContainerDefault = 
+	{
+		_class = "CVoiceContainerDefault"
+	}
+}

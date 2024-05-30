@@ -1,0 +1,24 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d}format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	vdata_template_name = "Voice Container: Looping Container"
+	vdata_template_description = "A container that retriggers a selector container"
+	generic_data_type = "CVoiceContainerBase"
+	LoopingTemplate = 
+	{
+		_class = "CVoiceContainerLoopTrigger"
+		m_pSound = 
+		[
+			{
+				_class = "CVoiceContainerSelector"
+				m_soundsToPlay = 
+				[
+				]
+				m_mode = "RandomNoRepeats"
+			}
+		]
+		m_flFadeTime = 0.75
+		m_flRetriggerTimeMin = 3.0
+		m_flRetriggerTimeMax = 5.0
+		m_bCrossFade = true
+	}
+}
