@@ -64,7 +64,6 @@
 @exclude color_correction
 @exclude env_beam
 @exclude env_beverage
-@exclude env_cubemap
 @exclude env_funnel
 @exclude env_instructor_vr_hint
 @exclude env_laser
@@ -94,10 +93,6 @@
 @exclude env_bubbles
 @exclude fog_volume
 @exclude func_detail_blocker
-@exclude func_precipitation
-@exclude func_precipitation_blocker
-@exclude func_reflective_glass
-@exclude func_shatterglass
 @exclude func_wall
 @exclude func_wall_toggle
 @exclude trigger_tonemap 
@@ -492,6 +487,7 @@
 @OverrideClass
 	metadata
 	{
+	    entity_tool_name = "Ortho Light"
 		entity_tool_group = "Lighting Legacy"
 	}
 = light_ortho
@@ -518,7 +514,17 @@
 @OverrideClass
 	metadata
 	{
-		entity_tool_name = "Cubemap"
+	    entity_tool_name = "Cubemap"
+		entity_tool_group = "Lighting"
+	}
+= env_cubemap
+[
+]
+
+@OverrideClass
+	metadata
+	{
+		entity_tool_name = "Cubemap Box"
 		entity_tool_tip = "Defines a cube map location."
 		entity_tool_group = "Lighting"
 	}
