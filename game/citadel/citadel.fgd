@@ -978,20 +978,20 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
 
 //===================== Test Citadel fgd by dirtkiller23 ======================
 //
-// TEST FGD, ЦЫГАНСКИЕ ФОКУСЫ
+// TEST FGD, ЦЫГАНСКИЕ ФОКУСЫ // спасибо за фокусы.
 //
 //==================================================================================================
 
 @PointClass base(Targetname, Angles) studio("models/editor/playerstart.vmdl") 
 	metadata
 	{
-	entity_tool_name = "Citadel spawnpoint"
+	entity_tool_name = "Citadel Spawnpoint"
 	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks the spawn point(Citadel)"
+	entity_tool_tip = "Entity which specifies where the player will start."
 	}
 	= info_team_spawn :
-	"This entity marks the start point (citadel). One of these needs to be placed for each team member. " +
-	"20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls."
+	"This entity indicates the position and facing direction at which the player will spawn." +
+	"Any number of info_team_spawn entities may be placed in a map for when working in cordoned-off portions of the map."
 [
 	lanenum(choices) : "Lane Color" : 0 : "Lane number" =
     [
@@ -1000,8 +1000,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"        
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
 	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
     [
@@ -1057,8 +1057,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"       
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     model(studio) : "Model" : "Set model"
     skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins."
@@ -1086,8 +1086,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"       
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     sub_objective_lane_2(choices) : "Lane Color 2" : 0 : "Lane number" =
     [
@@ -1096,8 +1096,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"       
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     sub_objective_lane_3(choices) : "Lane Color 3" : 0 : "Lane number" =
     [
@@ -1106,8 +1106,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"       
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     sub_objective_lane_4(choices) : "Lane Color 4" : 0 : "Lane number" =
     [
@@ -1116,8 +1116,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"       
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
     [
@@ -1240,10 +1240,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
 	[
 		0 : "None"
 		1 : "Yellow"
-		2 : "???"
+		2 : "Unknown"
 		3 : "Orange"
 		4 : "Blue"
-		5 : "???"
+		5 : "Unknown"
 		6 : "Purple"
 	]
 ]
@@ -1255,10 +1255,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
     [
         0 : "None"
         1 : "Yellow"
-        2 : "???"
+        2 : "Unknown"
         3 : "Orange"
         4 : "Blue"
-        5 : "???"
+        5 : "Unknown"
         6 : "Purple"
     ]
     Objective(string) : "Objective"
@@ -1288,10 +1288,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
 	[
 		0 : "None"
 		1 : "Yellow"
-		2 : "???"
+		2 : "Unknown"
 		3 : "Orange"
 		4 : "Blue"
-		5 : "???"
+		5 : "Unknown"
 		6 : "Purple"
 	]
 	
@@ -1313,10 +1313,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
     [
         0 : "None"
         1 : "Yellow"
-        2 : "???"
+        2 : "Unknown"
         3 : "Orange"
         4 : "Blue"
-        5 : "???"
+        5 : "Unknown"
         6 : "Purple"
     ]
     LaneSide(string) : "Lane side"
@@ -1354,10 +1354,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
     [
         0 : "None"
         1 : "Yellow"
-        2 : "???"
+        2 : "Unknown"
         3 : "Orange"
         4 : "Blue"
-        5 : "???"
+        5 : "Unknown"
         6 : "Purple"
     ]
     subclass_name(choices) : "Tier2 Bosses" : "npc_boss_tier2_weak" : "Sets the type of boss." =
@@ -1386,10 +1386,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
     [
         0 : "None"
         1 : "Yellow"
-        2 : "???"
+        2 : "Unknown"
         3 : "Orange"
         4 : "Blue"
-        5 : "???"
+        5 : "Unknown"
         6 : "Purple"
     ]
     subclass_name(choices) : "Tier3 Bosses" : "npc_boss_tier3" : "Sets the type of boss." =
@@ -1631,8 +1631,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"        
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
     teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
     [
@@ -1678,8 +1678,8 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
         3 : "Orange"
         4 : "Blue"        
         6 : "Purple"
-		2 : "???"
-		5 : "???"
+		2 : "Unknown"
+		5 : "Unknown"
     ]
 	start_active(boolean)  : "Start active" : 0
 	max_simulation_time(float)  : "Max simulation time" : : "Test'"
@@ -1704,10 +1704,10 @@ team_preview_position(string)  : "Team preview position" : : "Test'"
     [
         0 : "None"
         1 : "Yellow"
-        2 : "???"
+        2 : "Unknown"
         3 : "Orange"
         4 : "Blue"
-        5 : "???"
+        5 : "Unknown"
         6 : "Purple"
     ]
 	LaneSlot(string)  : "Lane slot" : : "Test'"
