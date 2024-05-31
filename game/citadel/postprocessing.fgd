@@ -1,0 +1,27 @@
+//===================== Copyright (c) Valve Corporation. All Rights Reserved. ======================
+//
+// Defines entity classes to control postprocessing
+//
+//==================================================================================================
+
+//-------------------------------------------------------------------------
+//
+// Post processing
+//
+//-------------------------------------------------------------------------
+@SolidClass base(Trigger) postprocessing("postprocessing") tags( PostProcessing )
+	metadata
+	{
+		auto_apply_material = "materials/tools_postprocess_volume.vmat"
+	}
+= post_processing_volume : "Set postprocessing params while a player is inside the volume."
+[
+	postprocessing(resource:postprocessing) : "Postprocessing file (.vpost)"
+	master(boolean) : "Master Volume" : "0" : "Makes this volume an unbound/infinite/master volume."
+	minexposure(float) : "Min Exposure Brightness" : "1.0" : "Minimum autoexposure scale" 
+	maxexposure(float) : "Max Exposure Brightness" : "1.0" : "Maximum autoexposure scale"
+	enableexposure(boolean) [ group = "Exposure Controls" ] : "Use Exposure Settings" : "1" : "Use the Min/Max exposure settings for this volume?"
+	exposurespeedup(float) [ group = "Exposure Controls" ] : "Exposure Adjustment Speed Up" : "1" : ""
+	exposurespeeddown(float) [ group = "Exposure Controls" ] : "Exposure Adjustment Speed Down" : "1" : ""
+	fadetime(float) [ group = "Transitions" ] : "Transition Time" : "1.0" : "Time to transition to these postprocessing settings in seconds"	
+]

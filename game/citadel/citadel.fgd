@@ -83,8 +83,6 @@
 @exclude env_sun
 @exclude env_texturetoggle
 @exclude env_tonemap_controller
-@exclude env_volumetric_fog_controller
-@exclude env_volumetric_fog_volume
 @exclude env_wind_clientside
 @exclude func_fish_pool
 @exclude func_instance
@@ -93,7 +91,6 @@
 @exclude info_ladder_dismount
 @exclude info_landmark
 @exclude info_lighting
-@exclude info_world_layer
 @exclude postprocess_controller
 @exclude color_correction_volume
 @exclude env_bubbles
@@ -105,7 +102,8 @@
 @exclude func_shatterglass
 @exclude func_wall
 @exclude func_wall_toggle
-@exclude trigger_tonemap
+@exclude trigger_tonemap 
+//Exclude Counter-Strike bullshit
 
 //--------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------
@@ -161,6 +159,7 @@
 		"4096" : "4096"
 		"8192" : "8192"
 		"16384" : "16384"
+		"32768" : "32768"
 	]
 	lightmap_queries(boolean) : "Lightmap Queries" : "1" : "Generates data which can be used to lookup lightmap UVs at a given position, useful for high-fidelity illumination of bullet decals on lightmapped geometry."
 
@@ -170,12 +169,13 @@
 		"1" : "Manual"
 		"2" : "Auto"
 	]
-	steamaudio_reverb_grid_type(choices) [ group="Steam Audio Reverb Settings" ]: "Grid Type" : "0" : "<b>Uniform Floor</b>: Places probes at a specified height above the floor with a specified horizontal spacing between probes. <br /><b>Manual Grid</b>: Use manually generated probes in the map.<br /><b>NavMesh Grid</b>: Places probes at a specified height above the NavMesh with a specified horizontal spacing between probes." =
+		steamaudio_reverb_grid_type(choices) [ group="Steam Audio Reverb Settings" ]: "Grid Type" : "0" : "<b>Uniform Floor</b>: Places probes at a specified height above the floor with a specified horizontal spacing between probes. <br /><b>Manual Grid</b>: Use manually generated probes in the map.<br /><b>NavMesh Grid</b>: Places probes at a specified height above the NavMesh with a specified horizontal spacing between probes." =
 	[
 		"0" : "Uniform Floor"
 		"1" : "Manual Grid"
 		"2" : "NavMesh Grid"
 	]
+
 	steamaudio_reverb_grid_spacing(float) [ group="Steam Audio Reverb Settings" ]: "Grid Spacing" : "6" : "The horizontal distance (in meters) between adjacent probes."
 	steamaudio_reverb_height_above_floor(float) [ group="Steam Audio Reverb Settings" ]: "Height Above Floor" : "1.5" : "The height (in meters) above the floor at which probes should be placed.."
 	steamaudio_reverb_rays(integer) [ group="Steam Audio Reverb Settings" ]: "Baking Rays" : "32768" : "The number of rays traced from the listener when baking reflections or reverb. Increasing this value results in more accurate reflections, at the cost of increased bake times."
@@ -221,88 +221,12 @@
 	input SetTeam(integer) : "Changes the entity's team"
 ]
 
-@BaseClass color(0 0 200) base(Targetname, RenderFields, Angles) = Weapon
-[
-	spawnflags(Flags) =
-	[
-		1 : "Start constrained" : 0
-	]
-	CanBePickedUp(boolean) : "Is this weapon allowed to be picked up?" : 1
-
-	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
-	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
-
-	input SetReserveAmmoAmount(integer) : "Set the reserve ammo on this weapon"
-	input SetAmmoAmount(integer) : "Set the ammo on this weapon"
-	input ToggleCanBePickedUp(void) : "Toggle CanBePickedUp"
-]
-
-
-//-------------------------------------------------------------------------
-//
-// Weapons
-//-------------------------------------------------------------------------
-//
-
-@PointClass base(Weapon) studio("weapons/models/ak47/weapon_rif_ak47.vmdl") = weapon_ak47 : "AK-47" []
-@PointClass base(Weapon) studio("weapons/models/aug/weapon_rif_aug.vmdl") = weapon_aug : "AUG" []
-@PointClass base(Weapon) studio("weapons/models/awp/weapon_snip_awp.vmdl") = weapon_awp : "AWP" []
-@PointClass base(Weapon) studio("weapons/models/bizon/weapon_smg_bizon.vmdl") = weapon_bizon : "PP-Bizon" []
-@PointClass base(Weapon) studio("weapons/models/cz75a/weapon_pist_cz75a.vmdl") = weapon_cz75a : "CZ75a" []
-@PointClass base(Weapon) studio("weapons/models/deagle/weapon_pist_deagle.vmdl") = weapon_deagle : "Desert Eagle" []
-@PointClass base(Weapon) studio("weapons/models/defuser/weapon_defuser.vmdl") = item_defuser : "Defuse Kit" []
-@PointClass base(Weapon) studio("weapons/models/elite/weapon_pist_elite.vmdl") = weapon_elite : "Dual Berettas" []
-@PointClass base(Weapon) studio("weapons/models/famas/weapon_rif_famas.vmdl") = weapon_famas : "FAMAS" []
-@PointClass base(Weapon) studio("weapons/models/fiveseven/weapon_pist_fiveseven.vmdl") = weapon_fiveseven : "Five-SeveN" []
-@PointClass base(Weapon) studio("weapons/models/g3sg1/weapon_snip_g3sg1.vmdl") = weapon_g3sg1 : "G3SG1 Sniper" []
-@PointClass base(Weapon) studio("weapons/models/galilar/weapon_rif_galilar.vmdl") = weapon_galilar : "Galil AR" []
-@PointClass base(Weapon) studio("weapons/models/glock18/weapon_pist_glock18.vmdl") = weapon_glock : "Glock-18" []
-@PointClass base(Weapon) studio("weapons/models/hkp2000/weapon_pist_hkp2000.vmdl") = weapon_hkp2000 : "P2000" []
-@PointClass base(Weapon) studio("weapons/models/healthshot/weapon_healthshot.vmdl") = weapon_healthshot : "Medi-Shot" []
-@PointClass base(Weapon) studio("weapons/models/knife/knife_default_t/weapon_knife.vmdl") = weapon_knife : "Knife" []
-@PointClass base(Weapon) studio("weapons/models/m249/weapon_mach_m249.vmdl") = weapon_m249 : "M249 Para" []
-@PointClass base(Weapon) studio("weapons/models/m4a4/weapon_rif_m4a4.vmdl") = weapon_m4a1 : "M4A4" []
-@PointClass base(Weapon) studio("weapons/models/m4a1_silencer/weapon_rif_m4a1_silencer.vmdl") = weapon_m4a1_silencer : "M4A1 Silenced" []
-@PointClass base(Weapon) studio("weapons/models/mac10/weapon_smg_mac10.vmdl") = weapon_mac10 : "MAC-10" []
-@PointClass base(Weapon) studio("weapons/models/mag7/weapon_shot_mag7.vmdl") = weapon_mag7 : "MAG-7" []
-@PointClass base(Weapon) studio("weapons/models/mp5sd/weapon_smg_mp5sd.vmdl") = weapon_mp5sd : "MP5-SD" []
-@PointClass base(Weapon) studio("weapons/models/mp7/weapon_smg_mp7.vmdl") = weapon_mp7 : "MP7" []
-@PointClass base(Weapon) studio("weapons/models/mp9/weapon_smg_mp9.vmdl") = weapon_mp9 : "MP9" []
-@PointClass base(Weapon) studio("weapons/models/negev/weapon_mach_negev.vmdl") = weapon_negev : "Negev" []
-@PointClass base(Weapon) studio("weapons/models/nova/weapon_shot_nova.vmdl") = weapon_nova : "Nova" []
-@PointClass base(Weapon) studio("weapons/models/p90/weapon_smg_p90.vmdl") = weapon_p90 : "P90" []
-@PointClass base(Weapon) studio("weapons/models/p250/weapon_pist_p250.vmdl") = weapon_p250 : "P250" []
-@PointClass base(Weapon) studio("weapons/models/revolver/weapon_pist_revolver.vmdl") = weapon_revolver : "Revolver " []
-@PointClass base(Weapon) studio("weapons/models/sawedoff/weapon_shot_sawedoff.vmdl") = weapon_sawedoff : "Sawed-Off" []
-@PointClass base(Weapon) studio("weapons/models/scar20/weapon_snip_scar20.vmdl") = weapon_scar20 : "Scar20" []
-@PointClass base(Weapon) studio("weapons/models/sg556/weapon_rif_sg556.vmdl") = weapon_sg556 : "SG 553" []
-@PointClass base(Weapon) studio("weapons/models/ssg08/weapon_snip_ssg08.vmdl") = weapon_ssg08 : "SSG 08" []
-@PointClass base(Weapon) studio("weapons/models/tec9/weapon_pist_tec9.vmdl") = weapon_tec9 : "Tec-9" []
-@PointClass base(Weapon) studio("weapons/models/ump45/weapon_smg_ump45.vmdl") = weapon_ump45 : "UMP-45" []
-@PointClass base(Weapon) studio("weapons/models/usp_silencer/weapon_pist_usp_silencer.vmdl") = weapon_usp_silencer : "USP Silenced" []
-@PointClass base(Weapon) studio("weapons/models/xm1014/weapon_shot_xm1014.vmdl") = weapon_xm1014 : "XM1014" []
-@PointClass base(Weapon) studio("weapons/models/taser/weapon_pist_taser.vmdl") = weapon_taser : "weapon_taser" []
-
-@PointClass base(Weapon) studio("weapons/models/c4/weapon_c4.vmdl") = weapon_c4 : "C4 Bomb" []
-
-@PointClass base(Weapon) studio("weapons/models/grenade/flashbang/weapon_flashbang.vmdl") = weapon_flashbang : "Flashbang" []
-@PointClass base(Weapon) studio("weapons/models/grenade/decoy/weapon_decoy.vmdl") = weapon_decoy : "Decoy Grenade" []
-@PointClass base(Weapon) studio("weapons/models/grenade/hegrenade/weapon_hegrenade.vmdl") = weapon_hegrenade : "HE Grenade" []
-@PointClass base(Weapon) studio("weapons/models/grenade/molotov/weapon_molotov.vmdl") = weapon_molotov : "Molotov" []
-@PointClass base(Weapon) studio("weapons/models/grenade/incendiary/weapon_incendiarygrenade.vmdl") = weapon_incgrenade : "Incendiary Grenade" []
-@PointClass base(Weapon) studio("weapons/models/grenade/sensorgrenade/weapon_sensorgrenade.vmdl") = weapon_tagrenade : "TAGrenade" []
-@PointClass base(Weapon) studio("weapons/models/grenade/smokegrenade/weapon_smokegrenade.vmdl") = weapon_smokegrenade : "Smoke Grenade" []
 //-------------------------------------------------------------------------
 //
 // Point Classes
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname) iconsprite("editor/game_end.vmat") = game_end : 
-	"An entity that ends a multiplayer game." 
-[
-	master(string) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
-	input EndGame(void) : "End the multiplayer game."
-]
+
 
 @PointClass base(Targetname, EnableDisable) tags( Lighting )
 	iconsprite( "materials/editor/env_cubemap_fog.vmat" ) 
@@ -436,376 +360,6 @@
 	input HideHudHint(void) : "Hides the hint message."
 ]
 
-@PointClass base(Targetname, Angles) studio("characters/models/shared/spawn/ctm_spawnpoint.vmdl")
-	metadata
-	{
-	entity_tool_name = "Counter Terrorist Spawn Point"
-	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks the spawn point for Counter Terrorists"
-	}
-	= info_player_counterterrorist :
-	"This entity marks the start point for counter-terrorists. One of these needs to be placed for each team member. " +
-	"20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls"
-
-[
-	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-]
-
-
-@PointClass base(Targetname, Angles) studio("characters/models/shared/spawn/tm_spawnpoint.vmdl") 
-	metadata
-	{
-	entity_tool_name = "Terrorist Spawn Point"
-	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks the spawn point for Terrorists"
-	}
-	= info_player_terrorist :
-	"This entity marks the start point for terrorists. One of these needs to be placed for each team member. " +
-	"20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls."
-[
-	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-]
-
-@PointClass base(Targetname, Angles) studio("characters/models/tm_professional/tm_professional_varh.mdl")
-	metadata
-	{
-	entity_tool_name = "Deathmatch Spawn Point"
-	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks a deathmatch spawn point"
-	}
-	= info_deathmatch_spawn :
-	"This entity marks a deathmatch spawn point. This is the entity that populates the map when mp_random_spawn is used." +
-	"Manually adding them to the map will guarantee that these spawn points are included in the set"
-[
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-]
-
-@PointClass base(Targetname, Angles) studio("characters/models/ctm_st6/ctm_st6_variantl.vmdl")
-	metadata
-	{
-	entity_tool_name = "Arms Race Counter Terrorist Spawn Point"
-	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks the start point for counter-terrorists in Arms Race"
-	}
-	= info_armsrace_counterterrorist :
-	"This entity marks the start point for counter-terrorists in Arms Race. " +
-	"Should be placed at least 128 units away from each other and surrounding walls"
-[
-	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-]
-
-@PointClass base(Targetname, Angles) studio("characters/models/tm_leet/tm_leet_varianta.mdl")
-	metadata
-	{
-	entity_tool_name = "Arms Race Terrorist Spawn Point"
-	entity_tool_group = "Player"
-	entity_tool_tip = "This entity marks the start point for terrorists in Arms Race"
-	}
-	= info_armsrace_terrorist :
-	"This entity marks the start point for terrorists in Arms Race. " +
-	"Should be placed at least 128 units away from each other and surrounding walls."
-[
-	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-]
-
-@PointClass base(Targetname, Angles) studio("characters/models/tm_phoenix/tm_phoenix.vmdl") sphere(hide_radius) = info_enemy_terrorist_spawn :
-	"This entity marks the start point for enemy terrorists in a coop game. " +
-	"Should be placed at least 80 units away from each other and surrounding walls."
-[
-	priority(integer) : "Spawn Priority (int)" : 0 : "Determines which spawn points get used first.  Smaller numbers are used before larger numbers."
-	enabled(boolean) : "Enabled by default?" : 1
-
-	input SetEnabled(void) : "Sets this spawn point as enabled."
-	input SetDisabled(void) : "Sets this spawn point as disabled."
-	input ToggleEnabled(void) : "Toggle the enabled/disabled state of this spawn point."
-	model_to_use(studio) : "Override player model" : "" : "Select a model to override the model used for enemies spawned at this spawn point." 
-	weapons_to_give(string) : "Weapons to spawn with" : "glock" : "Weapons and items to give to the bot on spawn. Ex. 'vesthelm, usp, awp, smokegreande, hegrenade'" 
-	armor_to_give(choices) : "Armor" : 1 : "What armor should the bot spawn with." =
-	[
-		0 : "None"
-		1 : "Vest and Helmet"
-		2 : "Heavy Armor"
-	]
-
-	start_asleep(boolean) : "Spawn alseep?" : 1 : "Do the bots that spawn here start alseep? If so, they will wait until they see or hear the player to move."
-	default_behavior(choices) : "Default Behavior" : 0 : "What behavior the bot should have when idle." =
-	[
-		0 : "Defend Camp"
-		1 : "Hunt"
-		2 : "Charge Enemy"
-		3 : "Defend Investigate"
-	]
-	bot_difficulty(integer) : "Bot Difficulty (int)" : 0 : "How hard the bot is to fight and what his skill level is. [0-7] (0 = super easy, 7 = super human)."
-	is_agressive(boolean) : "Is agressive?" : 0 : "Is the bot agreesive for his difficulty level?"
-	hide_radius(float) : "Hide Radius": 1000 : "Range around the spawn spot the bot will try to hide. Set to 0 to hold position and never try to hide."
-
-	PatrolArea01(target_destination) : "PatrolArea[1]"
-	PatrolArea02(target_destination) : "PatrolArea[2]"
-	PatrolArea03(target_destination) : "PatrolArea[3]"
-	PatrolArea04(target_destination) : "PatrolArea[4]"
-	PatrolArea05(target_destination) : "PatrolArea[5]"
-	PatrolArea06(target_destination) : "PatrolArea[6]"
-	PatrolArea07(target_destination) : "PatrolArea[7]"
-	PatrolArea08(target_destination) : "PatrolArea[8]"
-	PatrolArea09(target_destination) : "PatrolArea[9]"
-	PatrolArea10(target_destination) : "PatrolArea[10]"
-	PatrolArea11(target_destination) : "PatrolArea[11]"
-	PatrolArea12(target_destination) : "PatrolArea[12]"
-	PatrolArea13(target_destination) : "PatrolArea[13]"
-	PatrolArea14(target_destination) : "PatrolArea[14]"
-	PatrolArea15(target_destination) : "PatrolArea[15]"
-	PatrolArea16(target_destination) : "PatrolArea[16]"
-]
-
-@PointClass studio("models/chicken/chicken.vmdl") = chicken
-[
-]
-
-@PointClass base(Targetname, Angles) studio("models/hostage/hostage.vmdl") = hostage_entity :
-	"Hostage. A hostage NPC will spawn at this point.\n\n" +
-	"There are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
-[
-
-	HostageType(choices) : "Hostage Model (int)" : 0 : "Not used. Hostage models are chosen randomly by the game." =
-	[
-		0 : "A"
-		1 : "B"
-		1 : "C"
-		1 : "D"
-	]
-
-	HostageSpawnRandomFactor(integer) : "Hostage Spawn Random Factor (int)" : 1 : "Allows to increase probability of this hostage being picked during random spawn selection process, essentially considering this spawn point specified number of times."
-	
-	HostageSpawnExclusionGroup1(choices) : "Hostage Spawn Exclusion Group 1" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup2(choices) : "Hostage Spawn Exclusion Group 2" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup3(choices) : "Hostage Spawn Exclusion Group 3" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup4(choices) : "Hostage Spawn Exclusion Group 4" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup5(choices) : "Hostage Spawn Exclusion Group 5" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup6(choices) : "Hostage Spawn Exclusion Group 6" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup7(choices) : "Hostage Spawn Exclusion Group 7" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup8(choices) : "Hostage Spawn Exclusion Group 8" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup9(choices) : "Hostage Spawn Exclusion Group 9" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup10(choices) : "Hostage Spawn Exclusion Group 10" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup11(choices) : "Hostage Spawn Exclusion Group 11" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup12(choices) : "Hostage Spawn Exclusion Group 12" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup13(choices) : "Hostage Spawn Exclusion Group 13" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup14(choices) : "Hostage Spawn Exclusion Group 14" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup15(choices) : "Hostage Spawn Exclusion Group 15" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup16(choices) : "Hostage Spawn Exclusion Group 16" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup17(choices) : "Hostage Spawn Exclusion Group 17" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup18(choices) : "Hostage Spawn Exclusion Group 18" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup19(choices) : "Hostage Spawn Exclusion Group 19" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup20(choices) : "Hostage Spawn Exclusion Group 20" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup21(choices) : "Hostage Spawn Exclusion Group 21" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup22(choices) : "Hostage Spawn Exclusion Group 22" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup23(choices) : "Hostage Spawn Exclusion Group 23" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup24(choices) : "Hostage Spawn Exclusion Group 24" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup25(choices) : "Hostage Spawn Exclusion Group 25" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup26(choices) : "Hostage Spawn Exclusion Group 26" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup27(choices) : "Hostage Spawn Exclusion Group 27" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup28(choices) : "Hostage Spawn Exclusion Group 28" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup29(choices) : "Hostage Spawn Exclusion Group 29" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-
-	HostageSpawnExclusionGroup30(choices) : "Hostage Spawn Exclusion Group 30" : 0 : "Hostages sharing same spawn exclusion group will never spawn together." =
-	[
-		0 : "n/a"
-		1 : "Do not spawn together"
-	]
-	output OnHostageBeginGrab(void): "Fires when a player starts to use a hostage"
-	output OnFirstPickedUp(void): "Fires when the hostage is first picked up"
-	output OnDroppedNotRescued(void): "Fires when the hostage is dropped, but not rescued"
-	output OnRescued(void): "Fires when the hostage is rescued"
-]
-
-@PointClass base(hostage_entity) studio("models/hostage/hostage.vmdl") = info_hostage_spawn :
-	"Hostage. A hostage NPC will spawn at this point.\n\n" +
-	"There are usually four hostages placed in each hostage rescue map. The model for each Hostage is randomly chosen."
-[
-]
-
-@SolidClass base(Trigger) = func_hostage_rescue:  
-	"Hostage Rescue Zone. When a hostage is led into this zone, it is marked as rescued."
-[
-]
-
-@SolidClass base(Trigger) = trigger_bomb_reset:  
-	"A trigger volume that resets the bomb by teleporting it back into the playable area."
-[
-]
-
-@SolidClass base(Trigger) = trigger_hostage_reset:  
-	"A trigger volume that resets the hostage by teleporting it back into the playable area."
-[
-]
-
 @OverrideClass
 	metadata
 	{
@@ -828,7 +382,7 @@
 	[
 		"0" : "None"
 		"1" : "Baked"
-		//"2" : "Dynamic"
+		"2" : "Dynamic"
 		"3" : "Stationary"
 	]
 
@@ -838,26 +392,10 @@
 	
 	// These are controlled instead by ConVars in settings in CSGO that vary based on global shadow settings, 
 	// so don't expose it to artists since it won't work
-	nearclipplane(remove_key)	
-	numcascades(remove_key)
-	shadowcascaderesolution0(remove_key)
-	shadowcascaderesolution1(remove_key)
-	shadowcascaderesolution2(remove_key)
-	shadowcascaderesolution3(remove_key)
-	shadowcascadedistance0(remove_key)
-	shadowcascadedistance1(remove_key)
-	shadowcascadedistance2(remove_key)
-	shadowcascadedistance3(remove_key)
-	cascaderenderstaticobj(remove_key)
-	cascadecrossfade(remove_key)
-	cascadedistancefade(remove_key)
+
 
 	// These don't really need to be exposed, defauls work fine 99% of time
-	sunlightminbrightness(remove_key) 
-	ambient_occlusion(remove_key)
-	max_occlusion_distance(remove_key)
-	fully_occluded_fraction(remove_key)
-	occlusion_exponent(remove_key)
+	
 	// Hacks
 	minroughness(float) { group="Specular" min="0.0" max="1.0" } : "Specular Softness" : "0" : "USE WITH CAUTION: Artificially softens direct specular (not cubemaps) to simulate cheap, soft area lights. Note: Direct Lighting must be set to Stationary or Dynamic for this to have an effect."
 	
@@ -885,9 +423,6 @@
 		"3" : "Stationary"
 		"2" : "Dynamic"
 	]
-	fog(remove_key)
-	fogstrength(remove_key)
-	fogshadows(remove_key)
 ]
 
 @OverrideClass = light_rect
@@ -912,9 +447,7 @@
 		// "3" : "Stationary"
 		// "2" : "Dynamic"
 	]
-	fog(remove_key)
-	fogstrength(remove_key)
-	fogshadows(remove_key)
+
 ]
 
 @OverrideClass = light_omni2
@@ -938,10 +471,7 @@
 		"1" : "Static"
 		"3" : "Stationary"
 		"2" : "Dynamic"
-	]
-	fog(remove_key)
-	fogstrength(remove_key)
-	fogshadows(remove_key)	
+	]	
 ]
 
 @OverrideClass = sky_camera
@@ -1035,6 +565,20 @@
 	worldGroupID(string) : "WorldGroupID" : "skyboxWorldGroup0"
 ]
 
+@PointClass base(Targetname) iconsprite("editor/point_script.vmat") = point_script : 
+    "An entity that runs TypeScript" 
+[
+    script(resource:vts)    : "Script path" : : "TypeScript file to use"
+    script_keys(string)        : "Script keys" : : "Unknown"
+]
+
+@PointClass base(Targetname) iconsprite("editor/point_script.vmat") = client_script : 
+    "An entity that runs TypeScript" 
+[
+    script(resource:vts)    : "Script path" : : "TypeScript file to use"
+    script_keys(string)        : "Script keys" : : "Unknown"
+]
+
 @PointClass base(Targetname, Parentname, CanBeClientOnly) tags( Particles ) editormodel("models/editor/cone_helper_xyz.vmdl") helper_particle_glow() = env_particle_glow : 
 	"An entity to create light glows built via the particle editor" 
 [
@@ -1081,72 +625,6 @@
 [
 ]
 
-@PointClass base(BasePropDoorRotating) = dz_door :
-	"A security door."
-[
-	damageFilter(target_destination) : "Damage Filter" : : "The damage filter associated with this place."
-	is_security_door(boolean) : "Secure a spawn point" : 0
-]
-
-@PointClass base(Targetname, Angles) studio("models/weapons/w_eq_flashbang_thrown.mdl") = flashbang_projectile : "Flashbang Projectile"
-[
-    input SetTimer(float) : "Specify how many seconds before it explodes."
-]
-
-@PointClass base(Weapon, TeamNum) studio("models/weapons/w_eq_fraggrenade.mdl") = hegrenade_projectile : "HE Grenade Projectile"
-[
-    input InitializeSpawnFromWorld(void) : "If spawned from a env_entity_maker, you need to call this after spawn for it to work properly."
-]
-
-@PointClass base(Weapon, TeamNum) studio("models/weapons/w_eq_molotov.mdl") = molotov_projectile : "Molotov Projectile"
-[
-    input InitializeSpawnFromWorld(void) : "If spawned from a env_entity_maker, you NEED to call this after spawn for it to work properly."
-]
-
-@PointClass base(Weapon, TeamNum) studio("models/weapons/w_eq_smokegrenade.vmdl") = smokegrenade_projectile : "SmokeGrenade Projectile"
-[
-    input InitializeSpawnFromWorld(void) : "If spawned from a env_entity_maker, you NEED to call this after spawn for it to work properly."
-]
-
-@PointClass base(GameEntity) = point_dz_weaponspawn : "DZ Spawn Location"
-[
-	default_weight(float) : "Spawn weight" : 100 : "How likely it is to spawn at this location, default 100."
-]
-
-@PointClass base(GameEntity) = info_map_region : "DZ Named Map Region"
-[
-	radius(float) : "Region Radius" : 100 : "How far the named region extends."
-	token(string) : "Localization token" :  : "Localization string token."
-]
-
-@PointClass base(Angles) studio("models/props/coop_cementplant/exloding_barrel/exploding_barrel.vmdl") = prop_exploding_barrel : "Exploding barrel"
-[
-]
-
-@PointClass base(Angles) studio("models/props_survival/safe/safe.vmdl") = func_survival_c4_target : "C4 target"
-[
-	radius(float) : "Region Radius" : 350 : "Explosion radius."
-]
-
-@PointClass base(Angles) studio("models/props_survival/safe/safe.vmdl") = prop_counter : "Door price counter"
-[
-	initial_value(int) : "Initial value" : 0 : 
-]
-
-@PointClass base(GameEntity)  = point_dz_weaponspawn_group : "Weapon spawn group."
-[
-	radius(float) : "Group Radius" : 100 : 
-]
-
-@PointClass base( Angles) studio("models/props_survival/dronegun.vmdl") = point_dz_dronegun : "Drone Gun"
-[
-	spawnAutomatically(boolean) : "Spawn Automatically" : 0 : 
-]
-
-@PointClass base(GameEntity)  = info_paradrop_denial : "Paradrop denial area."
-[
-	radius(float) : "Denial Radius" : 200 : 
-]
 
 //-------------------------------------------------------------------------
 // Used to listen to events caled from code
@@ -1182,16 +660,6 @@
 // Solid Classes
 //
 //-------------------------------------------------------------------------
-@SolidClass base( Targetname )
-	metadata
-	{
-		auto_apply_material = "materials/tools/tools_cs_place.vmat"
-	}
-= env_cs_place : 
-	"An entity used to define a place on a CSGO map." 
-[
-	place_name(string) : "Place Name" : : "The name associated with this place."
-]
 
 @SolidClass base(Targetname) tags( NavMarkup ) 
 	metadata
@@ -1205,21 +673,6 @@
 	input UnblockNav(void) : "Stops blocking nav areas."
 ]
 
-@SolidClass base( Targetname ) = func_buyzone : 
-	"A trigger used to define a buyzone." 
-[
-	TeamNum(integer) : "Team Num" : : "Team number associated with this buyzone."
-]
-
-@SolidClass base( GameEntity ) = trigger_survival_playarea : 
-	"A trigger used to define the survial play area." 
-[
-]
-
-@SolidClass base( GameEntity ) = func_tablet_blocker : 
-	"Defines areas where tablet is covered by static." 
-[
-]
 
 @SolidClass base(Targetname, EnableDisable) = func_clip_vphysics : 
 	"A brush entity that's considered solid to vphysics." 
@@ -1228,25 +681,6 @@
 ]
 
 
-@SolidClass base(Targetname, Parentname ) = func_bomb_target:  
-	"Bomb Target. The terrorists can place C4 explosives while standing in this zone.\n\n" +
-	"When the bomb is planted and explodes inside this area, the BombExplode outputs are fired. The game handles " +
-	"all of the bomb planting and scoring logic – the BombExplode outputs are provided to add visual and damage effects."
-[
-	output BombExplode(void): "Fires when C4 explodes"
-	output BombPlanted(void): "Fires when a C4 is planted"
-	output BombDefused(void): "Fires when a C4 is defused"
-
-	heistbomb(boolean) : "Heist Mode bomb target" : 0 : "This is a Bomb Target designed for the Heist game mode."
-
-	bomb_mount_target(string) : "Bomb Mount Target" 
-	
-	bomb_site_designation(choices) : "Bomb Site" : 0 =
-	[
-		0 : "A"
-		1 : "B"
-	]
-]
 
 @OverrideClass = prop_static
 [
@@ -1288,6 +722,8 @@
 	]
 ]
 
+
+
 //-------------------------------------------------------------------------
 //
 // Map preview classes - Can only be used in background UI maps
@@ -1302,7 +738,7 @@
 [
 	ZNear(float)[ group="Frustum" ] : "ZNear" : 4 : "Distance to the near plane for preview of the frustum in hammer."
 	ZFar(float)[ group="Frustum" ] : "ZFar" : 100 : "Distance to the far plane for preview of the frustum in hammer."
- 	rendercolor(color255)[ group="Frustum" ] : "Color (R G B)" : "128 128 128" : "Render color for preview of the frustum in hammer."
+ 	rendercolor(color255)[ group="Frustum" ] : "Color (R G B)" : "128 128 128 for preview of the frustum in hammer."
 	aspectRatio(float)[ group="Frustum" ] : "Aspect Ratio" : "1.0" : "Aspect ratio of the camera for preview of the frustum in hammer. "
 
 	FOV(float) : "Field Of View" : "90" : "This is the horizontal field of view."
@@ -1323,13 +759,140 @@
 [
 	ZNear(float)[ group="Frustum" ] : "ZNear" : 4 : "Distance to the near plane for preview of the frustum in hammer."
 	ZFar(float)[ group="Frustum" ] : "ZFar" : 100 : "Distance to the far plane for preview of the frustum in hammer."
- 	rendercolor(color255)[ group="Frustum" ] : "Color (R G B)" : "128 128 128" : "Render color for preview of the frustum in hammer."
+ 	rendercolor(color255)[ group="Frustum" ] : "Color (R G B)" : "128 128 128 for preview of the frustum in hammer."
 	aspectRatio(float)[ group="Frustum" ] : "Aspect Ratio" : "1.0" : "Aspect ratio of the camera."
 
 	useVerticalFOV(boolean) : "Vertical FOV" : "0" : "Set to true if the camera should use vertical FOV (Default false)"
 	constant_speed(boolean) : "Constant Speed" : "1" : "Controls the timing of the camera.  If true the duration value on the path is used, otherwise the individual time values on the nodes are used.  (Default true)"
 	duration(float){ enabled={ variable="constant_speed" value="1" } } : "Constant Speed Duration" : "5" : "The amount of time in seconds the camera will take to traverse the path.  Ignored if Constant Speed is false. (Default 5)"
 	loop(boolean) : "Loop" : "0" : "Set to true if the camera animation should loop when reaching the end of the path. By default, the camera animation will hold the last frame."
+]
+
+@PathClass base(Targetname)
+metadata
+{
+path_node_class = "map_preview_camera_path_node"
+}
+tags( Camera )
+camera_path()
+= team_select_camera : "An editable path which controls an animated camera. Can only be used in background UI maps"
+[
+dof_enabled(boolean) { group="Depth Of Field" } : "Depth of Field Enabled" : "0"
+dof_near_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Blurry Distance" : "50"
+dof_near_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Crisp Distance" : "150"
+dof_far_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Crisp Distance" : "200"
+dof_far_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Blurry Distance" : "600"
+dof_tilt_to_ground(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Tilt Lens to Align With Ground Plane" : "0.75"
+    variant(integer): "Variant lol"
+useVerticalFOV(boolean) : "Vertical FOV" : "0" : "Set to true if the camera should use vertical FOV (Default false)"
+constant_speed(boolean) : "Constant Speed" : "1" : "Controls the timing of the camera.  If true the duration value on the path is used, otherwise the individual time values on the nodes are used.  (Default true)"
+duration(float){ enabled={ variable="constant_speed" value="1" } } : "Constant Speed Duration" : "5" : "The amount of time in seconds the camera will take to traverse the path.  Ignored if Constant Speed is false. (Default 5)"
+loop(boolean) : "Loop" : "0" : "Set to true if the camera animation should loop when reaching the end of the path. By default, the camera animation will hold the last frame."
+]
+
+@PathClass base(Targetname)
+metadata
+{
+path_node_class = "map_preview_camera_path_node"
+}
+tags( Camera )
+camera_path()
+= terrorist_team_intro_camera : "An editable path which controls an animated camera. Can only be used in background UI maps"
+[
+variant(integer): "Variant lol"
+dof_enabled(boolean) { group="Depth Of Field" } : "Depth of Field Enabled" : "0"
+dof_near_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Blurry Distance" : "50"
+dof_near_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Crisp Distance" : "150"
+dof_far_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Crisp Distance" : "200"
+dof_far_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Blurry Distance" : "600"
+dof_tilt_to_ground(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Tilt Lens to Align With Ground Plane" : "0.75"
+useVerticalFOV(boolean) : "Vertical FOV" : "0" : "Set to true if the camera should use vertical FOV (Default false)"
+constant_speed(boolean) : "Constant Speed" : "1" : "Controls the timing of the camera.  If true the duration value on the path is used, otherwise the individual time values on the nodes are used.  (Default true)"
+duration(float){ enabled={ variable="constant_speed" value="1" } } : "Constant Speed Duration" : "5" : "The amount of time in seconds the camera will take to traverse the path.  Ignored if Constant Speed is false. (Default 5)"
+loop(boolean) : "Loop" : "0" : "Set to true if the camera animation should loop when reaching the end of the path. By default, the camera animation will hold the last frame."
+]
+
+@PathClass base(Targetname)
+metadata
+{
+path_node_class = "map_preview_camera_path_node"
+}
+tags( Camera )
+camera_path()
+= counterterrorist_team_intro_camera : "An editable path which controls an animated camera. Can only be used in background UI maps"
+[
+variant(integer): "Variant lol"
+dof_enabled(boolean) { group="Depth Of Field" } : "Depth of Field Enabled" : "0"
+dof_near_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Blurry Distance" : "50"
+dof_near_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Near Crisp Distance" : "150"
+dof_far_crisp(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Crisp Distance" : "200"
+dof_far_blurry(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Far Blurry Distance" : "600"
+dof_tilt_to_ground(float) { enabled={ variable="dof_enabled" value="1" } group="Depth Of Field" } : "Depth of Field Tilt Lens to Align With Ground Plane" : "0.75"
+useVerticalFOV(boolean) : "Vertical FOV" : "0" : "Set to true if the camera should use vertical FOV (Default false)"
+constant_speed(boolean) : "Constant Speed" : "1" : "Controls the timing of the camera.  If true the duration value on the path is used, otherwise the individual time values on the nodes are used.  (Default true)"
+duration(float){ enabled={ variable="constant_speed" value="1" } } : "Constant Speed Duration" : "5" : "The amount of time in seconds the camera will take to traverse the path.  Ignored if Constant Speed is false. (Default 5)"
+loop(boolean) : "Loop" : "0" : "Set to true if the camera animation should loop when reaching the end of the path. By default, the camera animation will hold the last frame."
+]
+
+
+@PointClass base(RenderFields) model() = team_select_counterterrorist :
+"A model entity that can be used for characters in ui maps."
+[
+    variant(integer): "Variant lol"
+ordinal(integer): "Ordinal lol"
+model(studio) [report]: "World Model" : : "Overriden by game code."
+    team_preview_variant(string): "Team preview variant" : : "Test'"
+targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+animgraph(animgraph) { enabled={ function="ModelHasAnimGraph" } } : "Animgraph" : "" : "Specify animgraph resource.  Overridden if the model is changed by game code."
+character_mode(animgraph_enum)  { enabled={ function="ModelHasAnimGraph" } } : "Character Mode" : "" : "UI Character animation mode.  Set by game code."
+ct_true(string): "CT or T" : : "true if CT, false if T'"
+    weapon(string): "What weapon?" : : "Test'"
+team_preview_position(string)  : "Team preview position" : : "Test'"
+]
+
+@PointClass base(RenderFields) model() = team_select_terrorist :
+"A model entity that can be used for characters in ui maps."
+[
+    variant(integer): "Variant lol"
+ordinal(integer): "Ordinal lol"
+model(studio) [report]: "World Model" : : "Overriden by game code."
+    team_preview_variant(string): "Team preview variant" : : "Test'"
+targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+animgraph(animgraph) { enabled={ function="ModelHasAnimGraph" } } : "Animgraph" : "" : "Specify animgraph resource.  Overridden if the model is changed by game code."
+character_mode(animgraph_enum)  { enabled={ function="ModelHasAnimGraph" } } : "Character Mode" : "" : "UI Character animation mode.  Set by game code."
+ct_true(string): "CT or T" : : "true if CT, false if T'"
+    weapon(string): "What weapon?" : : "Test'"
+team_preview_position(string)  : "Team preview position" : : "Test'"
+]
+
+@PointClass base(RenderFields) model() = team_intro_terrorist :
+"A model entity that can be used for characters in ui maps."
+[
+    variant(integer): "Variant lol"
+ordinal(integer): "Ordinal lol"
+model(studio) [report]: "World Model" : : "Overriden by game code."
+    team_preview_variant(string): "Team preview variant" : : "Test'"
+targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+animgraph(animgraph) { enabled={ function="ModelHasAnimGraph" } } : "Animgraph" : "" : "Specify animgraph resource.  Overridden if the model is changed by game code."
+character_mode(animgraph_enum)  { enabled={ function="ModelHasAnimGraph" } } : "Character Mode" : "" : "UI Character animation mode.  Set by game code."
+ct_true(string): "CT or T" : : "true if CT, false if T'"
+    weapon(string): "What weapon?" : : "Test'"
+team_preview_position(string)  : "Team preview position" : : "Test'"
+]
+
+@PointClass base(RenderFields) model() = team_intro_counterterrorist :
+"A model entity that can be used for characters in ui maps."
+[
+    variant(integer): "Variant lol"
+ordinal(integer): "Ordinal lol"
+model(studio) [report]: "World Model" : : "Overriden by game code."
+ team_preview_variant(string): "Team preview variant" : : "Test'"
+targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+animgraph(animgraph) { enabled={ function="ModelHasAnimGraph" } } : "Animgraph" : "" : "Specify animgraph resource.  Overridden if the model is changed by game code."
+character_mode(animgraph_enum)  { enabled={ function="ModelHasAnimGraph" } } : "Character Mode" : "" : "UI Character animation mode.  Set by game code."
+ct_true(string): "CT or T" : : "true if CT, false if T'"
+    weapon(string): "What weapon?" : : "Test'"
+team_preview_position(string)  : "Team preview position" : : "Test'"
 ]
 
 @PointClass base(RenderFields) model() = csgo_player_previewmodel :
@@ -1516,4 +1079,765 @@
 	
 	output OnMoneySpent(void) : "Fires when input SpendMoneyFromPlayer succeeded."
 	output OnMoneySpentFail(void) : "Fires when input SpendMoneyFromPlayer failed. (Player didn't have enough money)"
+]
+
+
+//===================== Test Citadel fgd by dirtkiller23 ======================
+//
+// TEST FGD, ЦЫГАНСКИЕ ФОКУСЫ
+//
+//==================================================================================================
+
+@PointClass base(Targetname, Angles) studio("models/editor/playerstart.vmdl") 
+	metadata
+	{
+	entity_tool_name = "Citadel spawnpoint"
+	entity_tool_group = "Player"
+	entity_tool_tip = "This entity marks the spawn point(Citadel)"
+	}
+	= info_team_spawn :
+	"This entity marks the start point (citadel). One of these needs to be placed for each team member. " +
+	"20 start points is typical. Should be placed at least 128 units away from each other and surrounding walls."
+[
+	lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        3 : "Orange"
+        4 : "Blue"        
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+]
+
+@PointClass base(Targetname, Angles) studio("models/props_gameplay/wooden_crate_03/wooden_crate_03.vmdl") = citadel_breakable_prop :
+	"Breakable props that contain pickups."
+
+[
+
+	subclass_name(choices) : "Breakable Prop" : "citadel_breakable_wooden_crate_03" : "Sets the type of prop." =
+	[
+		"citadel_breakable_wooden_crate_03" : "Wooden Crate 03"
+		"citadel_breakable_wooden_crate_02" : "Wooden Crate 02"
+		"citadel_breakable_item_container" : "Item Container"
+		"citadel_breakable_jar_01" : "Jar 01"
+		"citadel_breakable_prop_vase" : "Vase"
+		
+	]
+	scales(vector) : "Scales" : "1 1 1"
+
+]
+
+@PointClass = item_crate_spawn : "Crate spawnpoint"
+[
+    early_spawn(boolean) : "Spawn early?"
+    loot_type(string) : "Loot type"
+    objective_position(string) : "Objective position"
+]
+
+@PointClass = citadel_minimap_boundary : ""
+[
+]
+
+@PointClass base(Targetname) = citadel_point_talker : "Point talker entity for Citadel."
+[
+]
+
+@PointClass base(Targetname) = destroyable_building : "Final shrine building?"
+[
+    BackdoorProtectionTrigger(string) : ""
+    building_health(integer) : "Set building health"
+    disableshadows(string) : "Disable shadows"
+    final(boolean) : "Set the building type to final (1)"
+    lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"        
+        3 : "Orange"
+        4 : "Blue"       
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    model(studio) : "Model" : "Set model"
+    skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins."
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+
+    output OnDestroyed(void) : ""
+]
+
+@PointClass base(Targetname, Angles) = citadel_final_objective_proxy : "Final objective"
+[
+    final_objective(target_destination) : "Final objective entity" : "" : "Select the final objective entity."
+    sub_objective_1(target_destination) : "Objective 1" : "" : "Select objective 1."
+    sub_objective_2(target_destination) : "Objective 2" : "" : "Select objective 2."
+    sub_objective_3(target_destination) : "Objective 3" : "" : "Select objective 3."
+    sub_objective_4(target_destination) : "Objective 4" : "" : "Select objective 4."
+    sub_objective_lane_1(choices) : "Lane Color 1" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"        
+        3 : "Orange"
+        4 : "Blue"       
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    sub_objective_lane_2(choices) : "Lane Color 2" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"        
+        3 : "Orange"
+        4 : "Blue"       
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    sub_objective_lane_3(choices) : "Lane Color 3" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"        
+        3 : "Orange"
+        4 : "Blue"       
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    sub_objective_lane_4(choices) : "Lane Color 4" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"        
+        3 : "Orange"
+        4 : "Blue"       
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+	
+    output BecomeActive(void) : ""
+    output FinalExposed(void) : ""
+    output FinalShielded(void) : ""
+    output SubObjective1Destroyed(void) : ""
+    output SubObjective1Revitilized(void) : ""
+    output SubObjective2Destroyed(void) : ""
+    output SubObjective2Revitilized(void) : ""
+]
+
+@PointClass base(Targetname, Angles) studio("models/editor/ground_node.vmdl") = info_cover_point :
+	"Spawn protection sentry turret."
+
+[
+
+	groupid(integer) : "Cover Group ID" : 0 : "Number of the info_cover_point group it belongs to."
+	visionradius(integer) : "Vision Radius" : 0 : "Distance the cover point can see in units?"
+	AllowOffNav(boolean) : "Allow Off Nav?" : 0
+	AutoAdjustDirection(choices) : "Auto Adjust Direction?" : "" =
+	[
+		"" : "Maybe?"
+		0 : "No"
+	]
+	
+]
+
+@PointClass base(Targetname, Angles) studio("models/editor/neutral_camp_marker.vmdl") = info_neutral_trooper_camp :
+	"Spawn protection sentry turret."
+
+[
+	CampName(string) : "Camp Name" : "" : "Name of the neutral trooper camp."
+	
+	ENeutralTrooperType(choices) : "Neutral Trooper Type" : "" =
+	[
+		"" : "?"
+		1 : "Level 1"
+		2 : "Level 2"
+		3 : "Level 3"
+		5 : "Level 5"
+		12 : "Level 12"
+	]
+	
+		subclass_name(choices) : "Trooper Subclass" : "neutral_camp_medium" =
+	[
+		"neutral_camp_medium" : "Medium"
+		"neutral_camp_strong" : "Strong"
+		"neutral_camp_vaults" : "Vaults"
+		"neutral_camp_midboss" : "Midboss"
+	]
+	
+	InitialSpawnDelayInSeconds(string) : "Initial Spawn Delay" : "120" : "Initial Spawn Delay In Seconds"
+	
+	SpawnIntervalInSeconds(string) : "Spawn Interval" : "120" : "Spawn Interval In Seconds."
+	
+
+]
+
+
+@PointClass base(Targetname, Angles) studio("models/npc/neutral_drain_creature/neutral_drain_creature.vmdl") = info_neutral_trooper_spawn :
+	"Spawn point for Neutral Troopers."
+
+[
+	CampName(target_destination) : "Camp Name" : "" : "Name of the neutral trooper camp this entity belongs to."
+	
+	ENeutralTrooperType(choices) : "Neutral Trooper Type" : 1 =
+	[
+		1 : "1"
+		2 : "2"
+		3 : "3"
+		5 : "5"
+		12 : "12"
+	]
+	
+		teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+	[
+		2 : "Team Amber"
+		3 : "Team Sapphire"
+		4 : "Team Neutral"
+	]
+	
+
+	CoverGroupID(integer) : "Cover Group ID" : 0 : "Number of the info_cover_point group it belongs to."
+	
+	Grenadier(boolean) : "Grenadier?" : 0 : "Unused?"
+	Super(boolean) : "Super?" : 0 : "Unused?"
+	HateCrateAttacker(boolean) : "Hates Crate Attackers?" : 1 : "Used for vault protectors."
+	model(studio) : "Override trooper model" : "" : "Select a model to override the model used for enemies spawned at this spawn point." 
+	modelscale(integer) : "Model Scale" : 1
+]
+
+
+@PointClass base(Targetname, Angles) studio("models/npc/trooper/trooper_melee.vmdl") = info_trooper_spawn :
+	"This entity marks the start point for troopers. One of these needs to be placed for each trooper in a lane. " +
+	"5 start points is typical per lane. Should be placed at least 128 units away from each other and surrounding walls"
+
+[
+
+	TrooperLevel(choices) : "Trooper Level" : 4 : "Sets the trooper's level. Normal matches have them set to level 4 by default." =
+	[
+		1 : "Level 1"
+		2 : "Level 2"
+		3 : "Level 3"
+		4 : "Level 4"
+	]
+	
+	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+	[
+		2 : "Team Amber"
+		3 : "Team Sapphire"
+		4 : "Team Neutral"
+	]
+	lanenum(choices) : "Lane Color" : 0 : "Sets the lane that the trooper will spawn for." =
+	[
+		0 : "None"
+		1 : "Yellow"
+		2 : "???"
+		3 : "Orange"
+		4 : "Blue"
+		5 : "???"
+		6 : "Purple"
+	]
+]
+
+@PointClass base(Targetname, Parentname, PlayerClass) editormodel("models/editor/playerstart.vmdl", fixedbounds) = info_teleport_location : 
+	"An entity that does nothing itself, but can be used to specify the destination for a trigger_teleport entity. An info_target can be used instead."
+[
+    lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        2 : "???"
+        3 : "Orange"
+        4 : "Blue"
+        5 : "???"
+        6 : "Purple"
+    ]
+    Objective(string) : "Objective"
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+]
+
+@PointClass base(Targetname, Angles) studio("models/npc/trooper/trooper_boss.vmdl") = info_super_trooper_spawn :
+	"This entity marks the start point for towers. One of these needs to be placed for each trooper in a lane. " +
+	"5 start points is typical per lane. Should be placed at least 128 units away from each other and surrounding walls"
+
+[
+
+	
+	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+	[
+		2 : "Team Amber"
+		3 : "Team Sapphire"
+		4 : "Team Neutral"
+	]
+	
+	lanenum(choices) : "Lane Color" : 0 : "Sets the lane that the trooper will spawn on." =
+	[
+		0 : "None"
+		1 : "Yellow"
+		2 : "???"
+		3 : "Orange"
+		4 : "Blue"
+		5 : "???"
+		6 : "Purple"
+	]
+	
+	SecondaryBoss(boolean) : "Is secondary boss? (Not yet used.)" : 0
+	
+	ReinforcementsOnly(boolean) : "Is reinforcement?" : 0
+	
+	BossName(string) : "Name of the boss." : "" : "Name that the boss will be referred to."
+	
+	CoverGroupID(integer) : "Cover Group ID" : 0 : "Number of the info_cover_point group it belongs to."
+	
+]
+
+@PointClass = npc_barrack_boss : "Barrack boss"
+[
+    BackdoorProtectionTrigger(string) : "What entity is the backdoor protection trigger"
+    CoverGroupID(integer) : "Cover group id"
+    lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        2 : "???"
+        3 : "Orange"
+        4 : "Blue"
+        5 : "???"
+        6 : "Purple"
+    ]
+    LaneSide(string) : "Lane side"
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+]
+
+@PointClass base(Targetname, Angles) studio("models/npc/gargoyle/neutral_gargoyle.vmdl") = npc_base_defense_sentry : "Spawn protection sentry turret."
+[
+    ability_weapon(string) : "Ability Weapon." : "spawn_defense_sentry" : "Type of projectile that will be shot."
+    health(float) : "Health" : "1000.0"
+	attack_cone(float) : "Attack Cone" : "180.0"
+    renderamt(integer) [ group="Render Properties" ] : "Alpha" : 255 : "Alpha of the fade, where 0 = fully transparent and 255 = fully opaque." 
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+    sentry_level(string) : "Sentry Level." : "1" : "Level of the sentry."
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+	scales(vector) : "Scales" : "1 1 1"
+    unit_status_offset(vector) : "Unit Status Offset" : "0 0 60"
+]
+
+@PointClass base(Targetname) = npc_boss_tier2 : "Tier2 boss"
+[
+    BossName(string) : "Boss name"
+    CoverGroupID(integer) : "Group ID"
+    lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        2 : "???"
+        3 : "Orange"
+        4 : "Blue"
+        5 : "???"
+        6 : "Purple"
+    ]
+    subclass_name(choices) : "Tier2 Bosses" : "npc_boss_tier2_weak" : "Sets the type of boss." =
+	[
+		"npc_boss_tier2_weak" : "Weak tier 2 boss"
+		"alt_npc_boss_tier2_weak" : "Alternate weak tier 2 boss"
+		"npc_boss_tier2" : "Tier 2 Boss"
+		"alt_npc_boss_tier2" : "Alternate tier 2 boss"
+		
+	]
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+]
+
+@PointClass base(Targetname) = npc_boss_tier3 : "Tier3 boss"
+[
+    BackdoorProtectionTrigger(target_destination) : "What entity is the backdoor protection trigger"
+    BossName(string) : "Boss name"
+    CoverGroupID(integer) : "Group ID"
+    dying_cover_id(integer) : "Dying cover ID"
+    lanenum(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        2 : "???"
+        3 : "Orange"
+        4 : "Blue"
+        5 : "???"
+        6 : "Purple"
+    ]
+    subclass_name(choices) : "Tier3 Bosses" : "npc_boss_tier3" : "Sets the type of boss." =
+	[
+		"npc_boss_tier3" : "Tier 3 boss (Patron)"
+        "alt_npc_boss_tier3" : "Alt tier 3 boss (Patron)"		
+		
+	]
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    vulnerable_cover_id(integer) : "Vulnerable cover id"
+
+    output OnBossKilled(void) : ""
+]
+
+@PointClass base( Targetname ) tags( Logic ) iconsprite("editor/logic_auto.vmat")
+	metadata
+	{
+		entity_tool_name = "Logic Auto Citadel"
+		entity_tool_group = "Logic"
+		entity_tool_tip = "Fire an output on map spawn"
+	}
+= logic_auto_citadel : 
+	"Fires outputs when a map spawns. " +
+	"If 'Remove on fire' flag is set the logic_auto is deleted after firing. " +
+	"It can be set to check a global state before firing. This allows you to only fire events based on "+
+	"what took place in a previous map."
+[
+	spawnflags(Flags) =
+	[
+		1 : "Remove on fire" : 1
+	]	
+	
+	// Outputs
+	output OnMapSpawn(void) : "Fired when the map is loaded for any reason."
+	output OnNewGame(void) : "Fired when the map is loaded to start a new game."
+	output OnLoadGame(void) : "Fired when the map is loaded from a saved game."
+	output OnMapTransition(void) : "Fired when the map is loaded due to a level transition."
+	output OnBackgroundMap(void) : "Fired when the map is loaded as a background to the main menu."
+	output OnMultiNewMap(void) : "Fired only in multiplayer, when a new map is loaded."
+	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
+	output OnDemoMapSpawn(void) : "Fired when the map is loaded in Demo Mode."
+	output OnVREnabled(void) : "Fired when the map is loaded with a VR HMD active."
+	output OnVRNotEnabled(void) : "Fired when the map is loaded without a VR HMD active."
+]
+
+@SolidClass = func_regenerate : "Return of func_regenerate from tf2"
+[
+    model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = func_conditional_collidable : ""
+[
+    interactas(string) : "Interact as"
+    interactwith(string) : "Interact with"
+    model(studio) : "Model" : "Set associated model"
+]
+
+@SolidClass base(Targetname) = trigger_item_shop : "Item shop trigger"
+[
+    AudioOffset(string) : "Audio offset"
+    model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = trigger_item_shop_safe_zone : "Item shop trigger safe zone"
+[
+     AudioOffset(string) : "Audio offset"
+    model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+
+    output OnContested(void) : "If contested"
+    output OnNotContested(void) : "If not contested"
+]
+
+@SolidClass base(Targetname) = trigger_modifier : "Trigger modifier"
+[
+    model(studio) : "Model" : "Set associated model"
+    modifier_name(string) : "Modifier name"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = trigger_neutral_shield : "Neutral shield trigger"
+[
+    model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = trigger_ping_location : "Ping location trigger"
+[
+    ping_location(target_destination) : "Ping location"
+    model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = trigger_team_base : "Team base trigger"
+[
+   model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Targetname) = trigger_trooper_detector : "Trooper detector trigger"
+[
+   model(studio) : "Model" : "Set associated model"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@SolidClass base(Trigger) = citadel_trigger_teleport : 
+	"A trigger volume that teleports entities that touch it (Citadel ver). Entities are teleported to the Remote Destination, and have their angles "+
+	"set to that of the Remote Destination's. If a Local Destination Landmark is specified, teleported entities are offset from the target "+
+	"by their initial offset from the landmark, and their angles are left alone."
+[
+	exitpoint(target_destination) : "Remote Destination" : : "The entity specifying the point to which entities should be teleported."
+	model(studio) : "Model" : "Set model"
+	StartDisabled(boolean) : "Start Disabled" : 0
+	spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]
+
+	uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"	
+	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+	output OnTeleport(void) : "OnTeleport output"
+]
+
+@SolidClass base(Targetname) = citadel_zap_trigger : "Zap trigger"
+[
+    model(studio) : "Model" : "Set model"
+    PercentMaxHealthDamage(float) : "Set max health damage by percent"
+    ShootAfterEnteringTime(float) : "Shoot after entering trigger"
+    ShootFromEntity(target_destination) : "Shoot from entity"
+    spawnflags(flags) =
+	[
+		1 : "Set Initial State" : 0
+	]	
+    StartDisabled(boolean) : "Start Disabled" : 0
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+    TimeBetweenShots(float) : "Time between shots"
+    uselocaloffset(boolean) : "Use Local offset" : 0 : "Rotate around landmark by relative landmark orientations"
+]
+
+@PointClass = info_assigned_lane_particle : "Particle to the assigned lane"
+[
+   lane_number(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"       
+        3 : "Orange"
+        4 : "Blue"        
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+    teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+]
+
+
+@PathNodeClass base(Targetname)
+	tags( Camera )
+	editormodel( "models/editor/camera" )
+	camera_path_node() studio("models/props_gameplay/zip_tower_hover.vmdl")
+	= citadel_zipline_path_node
+[
+	teamnumber(choices) : "Team Number" : 4 : "Sets the team that the trooper belongs to." =
+    [
+        2 : "Team Amber"
+        3 : "Team Sapphire"
+        4 : "Team Neutral"
+    ]
+	corner_node(string)  : "Corner node" : 0
+	enabled(boolean) : "Enable" : 0
+	disable_zipping_to(boolean)  : "Disable zipping to" : 0
+	capturable(boolean)  : "Capturable" : 0
+	
+]
+
+@PathClass base(Targetname)
+	metadata
+	{
+		path_node_class = "citadel_zipline_path_node"
+	}
+	tags( Camera )
+	camera_path()
+	= citadel_zipline_path  : "An editable path which controls an animated camera. Can only be used in background UI maps"
+[
+    lane_number(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"       
+        3 : "Orange"
+        4 : "Blue"        
+        6 : "Purple"
+		2 : "???"
+		5 : "???"
+    ]
+	start_active(boolean)  : "Start active" : 0
+	max_simulation_time(float)  : "Max simulation time" : : "Test'"
+	particle_spacing(float)  : "Particle spacing" : : "Test'"
+	slack(float)  : "Slack" : : "Test'"
+	radius(float)  : "Radius" : : "Test'"
+	static_collision(boolean)  : "Static collision" : 0
+	color_tint(color255) : "Color (R G B)" : "Lane number"
+	effect_name(particlesystem) [report] : "Particle System Name" : "particles/entity/path_particle_cable_default.vpcf"
+]
+
+@PathClass base(Targetname)
+	metadata
+	{
+		path_node_class = "citadel_zipline_path_node"
+	}
+	tags( Camera )
+	camera_path()
+	= lane_marker_path : "An editable path which controls an animated camera. Can only be used in background UI maps"
+[
+    lane_number(choices) : "Lane Color" : 0 : "Lane number" =
+    [
+        0 : "None"
+        1 : "Yellow"
+        2 : "???"
+        3 : "Orange"
+        4 : "Blue"
+        5 : "???"
+        6 : "Purple"
+    ]
+	LaneSlot(string)  : "Lane slot" : : "Test'"
+]
+
+
+
+
+@FilterClass base(BaseFilter) iconsprite("editor/filter_name.vmat") = filter_activator_team :
+	"A filter that filters by the name of the activator."
+[
+	filtername(target_destination) : "Filter Name" : : "The name to filter by. If the filter mode is Allow, only entities whose "+
+		"name matches the given string will pass the filter. If the filter mode is Disallow, "+
+		"all entities EXCEPT those whose name matches the string will pass the filter."
+	filterteam(choices) : "Team" : 0 : "Team" =
+	[
+		0 : "Any"
+		2 : "Team Amber"
+		3 : "Team Sapphire"
+		4 : "Team Neutral"
+	]
+	negated(choices) : "Negated?" : 0 : "Only allow entities that do not achieve the criteria." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 ]
