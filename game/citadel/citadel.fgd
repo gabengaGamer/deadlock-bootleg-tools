@@ -58,9 +58,6 @@
 //Exclude this since we want to remove some defunct parameters. Only way to do this currently is to exclude and redefine
 @exclude env_sky 
 @exclude func_illusionary
-@exclude light_ortho
-@exclude light_spot
-@exclude light_omni
 @exclude light_dynamic
 @exclude beam_spotlight
 @exclude color_correction
@@ -473,6 +470,33 @@
 	]	
 ]
 
+@OverrideClass
+	metadata
+	{
+		entity_tool_group = "Lighting Legacy"
+	}
+= light_omni
+[
+]
+
+@OverrideClass
+	metadata
+	{
+		entity_tool_group = "Lighting Legacy"
+	}
+= light_spot
+[
+]
+
+@OverrideClass
+	metadata
+	{
+		entity_tool_group = "Lighting Legacy"
+	}
+= light_ortho
+[
+]
+
 @OverrideClass = sky_camera
 [
 	clip_3D_skybox_near_to_world_far(remove_key)
@@ -525,7 +549,7 @@
 @OverrideClass 
 	metadata
 	{
-		entity_tool_name = "Combined Cubemap and Light Probe volume"
+		entity_tool_name = "Combined Light Probe Volume"
 		entity_tool_group = "Lighting"
 		entity_tool_tip = "Combined box-projected cubemap for reflections and a light probe volume for dynamic objects"
 	}
@@ -545,6 +569,17 @@
 		"48.0" : "Medium Resolution"
 		"108.0" : "Low Resolution"
 	]
+]
+
+@OverrideClass
+	metadata
+	{
+		entity_tool_name = "Light Probe Volume"
+		entity_tool_group = "Lighting"
+		entity_tool_tip = "Light probe volume for dynamic objects"
+	}
+= env_light_probe_volume
+[
 ]
 
 @OverrideClass = point_camera_vertical_fov
