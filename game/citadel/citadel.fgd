@@ -17,6 +17,7 @@
 //--------------------------------------------------------------------------------------------------
 @EntityGroup "Player" { start_expanded = true }
 @EntityGroup "Lighting" { start_expanded = true }
+@EntityGroup "Lighting Legacy" { start_expanded = true }
 @EntityGroup "Fog & Sky" { start_expanded = true }
 @EntityGroup "Content" { start_expanded = true }
 
@@ -581,6 +582,7 @@
 = env_light_probe_volume
 [
 ]
+
 
 @OverrideClass = point_camera_vertical_fov
 [
