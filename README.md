@@ -13,10 +13,10 @@ Name               | Status
 AssetBrowser       | Yes
 Hammer             | Partially/Not all deadlock FGD entities implemented
 MaterialEditor     | Yes
-ModelDoc           | Partially/Crashes on opening/creating models
+ModelDoc           | Yes
 Animgraph          | No
-ParticleEditor     | No
+ParticleEditor     | Yes
 ImageSubrectEditor | Yes
-SFM                | Partially/Crashes when selecting a scene
+SFM                | Yes
 VConsole           | Yes
 VConsoleTools      | Yes
