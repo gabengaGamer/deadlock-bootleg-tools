@@ -11,9 +11,9 @@
 Name               | Status
 -------------------|----------------------
 AssetBrowser       | Yes
-Hammer             | Partially/Uses FGD files from CS2
+Hammer             | Partially/Not all deadlock FGD entities implemented
 MaterialEditor     | Yes
-ModelDoc           | Partially/Crashes when opening deadlock models
+ModelDoc           | Partially/Crashes on opening/creating models
 Animgraph          | No
 ParticleEditor     | No
 ImageSubrectEditor | Yes
